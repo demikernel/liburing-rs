@@ -1,0 +1,28 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
+[package]
+name = "liburing"
+version = "0.1.0"
+authors = [ "Microsoft Corporation" ]
+edition = "2018"
+description = "Rust Bindings for Liburing"
+readme = "README.md"
+homepage = "https://aka.ms/demikernel"
+repository = "https://github.com/demikernel/liburing-rs"
+license-file = "LICENSE.txt"
+
+[build-dependencies]
+bindgen = "0.59.2"
+cc = "1.0.73"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = false
+incremental = false
+rpath = false
