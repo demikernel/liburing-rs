@@ -2,6 +2,7 @@ Rust Bindings for Liburing
 ==========================
 
 [![Join us on Slack!](https://img.shields.io/badge/chat-on%20Slack-e01563.svg)](https://join.slack.com/t/demikernel/shared_invite/zt-11i6lgaw5-HFE_IAls7gUX3kp1XSab0g)
+[![Build](https://github.com/demikernel/liburing-rs/actions/workflows/build.yml/badge.svg)](https://github.com/demikernel/liburing-rs/actions/workflows/build.yml)
 
 This repository provides Rust bindings for [Liburing](https://github.com/axboe/liburing).
 
