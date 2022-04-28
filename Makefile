@@ -6,7 +6,7 @@
 #===============================================================================
 
 export PREFIX ?= $(HOME)
-export PKG_CONFIG_PATH ?= $(shell find $(PREFIX)/lib/ -name '*pkgconfig*' -type d)
+export PKG_CONFIG_PATH ?= $(shell find $(PREFIX)/lib/ -name '*pkgconfig*' -type d | xargs | sed -e 's/\s/:/g')
 
 #===============================================================================
 # Toolchain Configuration
