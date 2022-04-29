@@ -49,6 +49,11 @@ extern "C" {
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 #[inline]
+pub unsafe fn io_uring_get_sqe(ring: *mut io_uring) -> *mut io_uring_sqe {
+    io_uring_get_sqe_(ring)
+}
+
+#[inline]
 pub unsafe fn io_uring_prep_send(sqe: *mut io_uring_sqe, sockfd: c_int, buf: *const c_void, len: usize, flags: c_int) {
     io_uring_prep_send_(sqe, sockfd, buf, len, flags);
 }

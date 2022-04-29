@@ -6,9 +6,35 @@ Rust Bindings for Liburing
 
 This repository provides Rust bindings for [Liburing](https://github.com/axboe/liburing).
 
+This crate supports version `7ad5e52d4d2f91203615cd738e56aba10ad8b8f6` of `liburing`.
+
 > This project is a component of Demikernel - a libOS architecture for kernel-bypass devices.
 
 > To read more about Demikernel check out https://aka.ms/demikernel.
+
+Building
+----------
+
+**1. Clone This Repository**
+```
+export WORKDIR=$HOME                                      # Change this to whatever you want.
+cd $WORKDIR                                               # Switch to working directory.
+git clone https://github.com/demikernel/liburing-rs.git   # Clone.
+```
+
+**2. Setup Build Environment (Optional)**
+
+>  Set this if liburing is not installed system wide.
+
+```
+export PKG_CONFIG_PATH=/path/to/liburing/pkgconfig
+```
+
+**3. Build Rust Bindings for Liburing**
+```
+cd $WORKDIR/liburing-rs    # Switch to repository's source tree.
+make                       # Build Rust bindings for liburing.
+```
 
 Code of Conduct
 ---------------
