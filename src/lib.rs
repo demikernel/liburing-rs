@@ -28,6 +28,16 @@ extern "C" {
 
     fn io_uring_prep_send_(sqe: *mut io_uring_sqe, sockfd: c_int, buf: *const c_void, len: usize, flags: c_int);
 
+    fn io_uring_prep_sendto_(
+        sqe: *mut io_uring_sqe,
+        sockfd: c_int,
+        buf: *const c_void,
+        len: usize,
+        flags: c_int,
+        sockaddr: *const sockaddr,
+        addrlen: socklen_t,
+    );
+
     fn io_uring_prep_recv_(sqe: *mut io_uring_sqe, sockfd: c_int, buf: *mut c_void, len: usize, flags: c_int);
 
     fn io_uring_wait_cqe_(ring: *mut io_uring, cqe_ptr: *mut *mut io_uring_cqe) -> c_int;
@@ -56,6 +66,19 @@ pub unsafe fn io_uring_get_sqe(ring: *mut io_uring) -> *mut io_uring_sqe {
 #[inline]
 pub unsafe fn io_uring_prep_send(sqe: *mut io_uring_sqe, sockfd: c_int, buf: *const c_void, len: usize, flags: c_int) {
     io_uring_prep_send_(sqe, sockfd, buf, len, flags);
+}
+
+#[inline]
+pub unsafe fn io_uring_prep_sendto(
+    sqe: *mut io_uring_sqe,
+    sockfd: c_int,
+    buf: *const c_void,
+    len: usize,
+    flags: c_int,
+    sockaddr: *const sockaddr,
+    addrlen: socklen_t,
+) {
+    io_uring_prep_sendto_(sqe, sockfd, buf, len, flags, sockaddr, addrlen);
 }
 
 #[inline]
