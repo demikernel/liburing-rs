@@ -31,5 +31,8 @@ check-fmt: check-fmt-rust
 check-fmt-rust:
 	$(CARGO) fmt -- --check
 
+test:
+	$(CARGO) test $(BUILD)
+
 clean:
 	$(CARGO) clean
