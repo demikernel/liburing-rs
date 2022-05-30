@@ -7,7 +7,6 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 #![allow(improper_ctypes)]
-#![allow(deref_nullptr)]
 
 //==============================================================================
 // Imports
