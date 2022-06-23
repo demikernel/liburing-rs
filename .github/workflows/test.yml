@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-name: Build
+name: Test
 
 on:
   workflow_call:
@@ -21,56 +21,14 @@ env:
 jobs:
 
   #=====================================================================================================================
-  # Build Doc
-  #=====================================================================================================================
-
-  build-doc:
-    name: Check Formatting
-    runs-on: ubuntu-latest
-    steps:
-    - name: Compile
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.host }}
-        username: ${{ secrets.username }}
-        key: ${{ secrets.key }}
-        port: ${{ secrets.port }}
-        envs: GITHUB_REPOSITORY
-        script: |
-          cd $GITHUB_REPOSITORY
-          make doc
-
-  #=====================================================================================================================
-  # Check Formatting
-  #=====================================================================================================================
-
-  check-fmt:
-    name: Check Formatting
-    needs: [build-doc]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Compile
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.host }}
-        username: ${{ secrets.username }}
-        key: ${{ secrets.key }}
-        port: ${{ secrets.port }}
-        envs: GITHUB_REPOSITORY
-        script: |
-          cd $GITHUB_REPOSITORY
-          make check-fmt
-
-  #=====================================================================================================================
   # Build Debug
   #=====================================================================================================================
 
   build-debug:
     name: Compile Debug
-    needs: [check-fmt]
     runs-on: ubuntu-latest
     steps:
-    - name: Compile
+    - name: Build Debug
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.host }}
@@ -79,8 +37,31 @@ jobs:
         port: ${{ secrets.port }}
         envs: GITHUB_REPOSITORY
         script: |
+          echo repository: $GITHUB_REPOSITORY
           cd $GITHUB_REPOSITORY
           make all DEBUG=yes
+
+  #=====================================================================================================================
+  # Test Debug
+  #=====================================================================================================================
+
+  test-debug:
+    name: Test Debug
+    needs: [build-debug]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test Debug
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.host }}
+        username: ${{ secrets.username }}
+        key: ${{ secrets.key }}
+        port: ${{ secrets.port }}
+        envs: GITHUB_REPOSITORY
+        script: |
+          echo repository: $GITHUB_REPOSITORY
+          cd $GITHUB_REPOSITORY
+          make test DEBUG=yes
 
   #=====================================================================================================================
   # Build Release
@@ -88,10 +69,10 @@ jobs:
 
   build-release:
     name: Compile Release
-    needs: [build-debug]
+    needs: [test-debug]
     runs-on: ubuntu-latest
     steps:
-    - name: Compile
+    - name: Build Release
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.host }}
@@ -100,5 +81,28 @@ jobs:
         port: ${{ secrets.port }}
         envs: GITHUB_REPOSITORY
         script: |
+          echo repository: $GITHUB_REPOSITORY
           cd $GITHUB_REPOSITORY
-          make all DEBUG=no
+          make all DEBUG=yes
+
+  #=====================================================================================================================
+  # Test Release
+  #=====================================================================================================================
+
+  test-release:
+    name: Test Release
+    needs: [build-release]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test Release
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.host }}
+        username: ${{ secrets.username }}
+        key: ${{ secrets.key }}
+        port: ${{ secrets.port }}
+        envs: GITHUB_REPOSITORY
+        script: |
+          echo repository: $GITHUB_REPOSITORY
+          cd $GITHUB_REPOSITORY
+          make test DEBUG=yes
