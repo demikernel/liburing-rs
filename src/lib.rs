@@ -39,6 +39,8 @@ extern "C" {
 
     fn io_uring_prep_recv_(sqe: *mut io_uring_sqe, sockfd: c_int, buf: *mut c_void, len: usize, flags: c_int);
 
+    fn io_uring_prep_recvmsg_(sqe: *mut io_uring_sqe, sockfd: c_int, msg: *mut msghdr, flags: c_int);
+
     fn io_uring_wait_cqe_(ring: *mut io_uring, cqe_ptr: *mut *mut io_uring_cqe) -> c_int;
 
     fn io_uring_peek_cqe_(ring: *mut io_uring, cqe_ptr: *mut *mut io_uring_cqe) -> c_int;
@@ -88,6 +90,11 @@ pub unsafe fn io_uring_prep_sendmsg(sqe: *mut io_uring_sqe, sockfd: c_int, msg: 
 #[inline]
 pub unsafe fn io_uring_prep_recv(sqe: *mut io_uring_sqe, sockfd: c_int, buf: *mut c_void, len: usize, flags: c_int) {
     io_uring_prep_recv_(sqe, sockfd, buf, len, flags);
+}
+
+#[inline]
+pub unsafe fn io_uring_prep_recvmsg(sqe: *mut io_uring_sqe, sockfd: c_int, msg: *mut msghdr, flags: c_int) {
+    io_uring_prep_recvmsg_(sqe, sockfd, msg, flags);
 }
 
 #[inline]

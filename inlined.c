@@ -44,6 +44,11 @@ void io_uring_prep_recv_(struct io_uring_sqe *sqe, int sockfd, void *buf, size_t
     io_uring_prep_recv(sqe, sockfd, buf, len, flags);
 }
 
+void io_uring_prep_recvmsg_(struct io_uring_sqe *sqe, int sockfd, struct msghdr *msg, unsigned flags)
+{
+    io_uring_prep_recvmsg(sqe, sockfd, msg, flags);
+}
+
 int io_uring_wait_cqe_(struct io_uring *ring, struct io_uring_cqe **cqe_ptr)
 {
     return io_uring_wait_cqe(ring, cqe_ptr);
